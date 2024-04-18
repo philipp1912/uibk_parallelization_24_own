@@ -14,7 +14,7 @@ limiter_base::limiter_base() {}
 limiter_minmod::limiter_minmod(double theta) { this->theta = theta; }
 
 double limiter_minmod::compute(double first, double second, double third) {
-	// TBD by students
+	// TBD by students DONE
 	double abs_first = std::abs(first);
 	double abs_second = std::abs(second);
 	double abs_third = std::abs(third);

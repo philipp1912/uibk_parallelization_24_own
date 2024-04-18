@@ -80,32 +80,32 @@ void physics::get_physical_fluxes(const fluid_cell &fluid, fluxes_cell &fluxes, 
 	// fluxes.flux_data[fluid.get_index_density()] = fluid_cell.fluid_data[]
 	if (local_direction == parallelisation::direction::x) {
 		fluxes.flux_data[fluid.get_index_density()] = density * v_x;
-		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_x + pressure;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_y()] = density * v_x * v_y;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_z()] = density * v_x * v_z;    // TBD by students
-		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_x; // TBD by students
+		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_x + pressure;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_y()] = density * v_x * v_y;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_z()] = density * v_x * v_z;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_x; // TBD by students DONE
 		fluxes.flux_data[fluid.get_index_tracer()] = tracer * v_x;
 	}
 	else if (local_direction == parallelisation::direction::y) {
 		fluxes.flux_data[fluid.get_index_density()] = density * v_y;
-		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_y;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_y()] = density * v_y * v_y + pressure;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_z()] = density * v_y * v_z;    // TBD by students
-		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_y; // TBD by students
+		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_y;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_y()] = density * v_y * v_y + pressure;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_z()] = density * v_y * v_z;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_y; // TBD by students DONE
 		fluxes.flux_data[fluid.get_index_tracer()] = tracer * v_y;
 	} 
 	else {
 		fluxes.flux_data[fluid.get_index_density()] = density * v_z;
-		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_z;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_y()] = density * v_y * v_z;    // TBD by students
-		fluxes.flux_data[fluid.get_index_v_z()] = density * v_z * v_z + pressure;    // TBD by students
-		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_z; // TBD by students
+		fluxes.flux_data[fluid.get_index_v_x()] = density * v_x * v_z;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_y()] = density * v_y * v_z;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_v_z()] = density * v_z * v_z + pressure;    // TBD by students DONE
+		fluxes.flux_data[fluid.get_index_energy()] = (e_total + pressure) * v_z; // TBD by students DONE
 		fluxes.flux_data[fluid.get_index_tracer()] = tracer * v_z;
 	} 
 }
 
 double physics::get_sound_speed(double density, double pressure) {
-	return std::sqrt(adiabatic_index * (pressure/density)); // TBD by students
+	return std::sqrt(adiabatic_index * (pressure/density)); // TBD by students DONE
 }
 
 double physics::get_lambda_abs_max(const fluid_cell &fluid) {
@@ -132,23 +132,23 @@ void physics::get_lambda_min_max(double &lambda_min, double &lambda_max, const f
 	int index_density = fluid_left_cell.get_index_density();
 	int index_velocity_parallel = fluid_left_cell.get_index_v_x();
 	if (local_direction == parallelisation::direction::y) {
-		index_velocity_parallel = fluid_left_cell.get_index_v_y(); // TBD by students
+		index_velocity_parallel = fluid_left_cell.get_index_v_y(); // TBD by students DONE
 	} else if (local_direction == parallelisation::direction::z) {
-		index_velocity_parallel = fluid_left_cell.get_index_v_z(); // TBD by students
+		index_velocity_parallel = fluid_left_cell.get_index_v_z(); // TBD by students DONE
 	}
 
-	double density_left = fluid_left_cell.fluid_data[index_density];  // TBD by students
-	double density_right = fluid_right_cell.fluid_data[index_density]; // TBD by students
+	double density_left = fluid_left_cell.fluid_data[index_density];  // TBD by students DONE
+	double density_right = fluid_right_cell.fluid_data[index_density]; // TBD by students DONE
 
 	double v_parallel_left = fluid_left_cell.fluid_data[index_velocity_parallel];
-	double v_parallel_right = fluid_right_cell.fluid_data[index_velocity_parallel]; // TBD by students
+	double v_parallel_right = fluid_right_cell.fluid_data[index_velocity_parallel]; // TBD by students DONE
 
 	double pressure_left = get_pressure(fluid_left_cell);
-	double pressure_right = get_pressure(fluid_right_cell); // TBD by students
+	double pressure_right = get_pressure(fluid_right_cell); // TBD by students DONE
 
 	double sound_speed_left = get_sound_speed(density_left, pressure_left);
-	double sound_speed_right = get_sound_speed(density_right, pressure_right); // TBD by students
+	double sound_speed_right = get_sound_speed(density_right, pressure_right); // TBD by students DONE 
 
 	lambda_max = std::max(v_parallel_left + sound_speed_left, v_parallel_right + sound_speed_right);
-	lambda_min = std::min(v_parallel_left - sound_speed_left, v_parallel_right - sound_speed_right); // TBD by students
+	lambda_min = std::min(v_parallel_left - sound_speed_left, v_parallel_right - sound_speed_right); // TBD by students DONE
 }
