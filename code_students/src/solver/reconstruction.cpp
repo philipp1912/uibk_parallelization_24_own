@@ -25,7 +25,7 @@ void reconstruction::get_derivatives(const fluid &fluid3D, fluid_cell &derivativ
 
 		// Now, apply the limiter
 		// TBD by students: here you have to pass sensible parameters
-		double derivative = limiter.compute(42.0, 42.0, 42.0);
+		double derivative = limiter.compute(delta_left, delta_central, delta_right);
 		derivatives.fluid_data[index_field] = derivative;
 	}
 }
