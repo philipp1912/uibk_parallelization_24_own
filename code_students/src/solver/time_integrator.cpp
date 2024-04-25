@@ -26,11 +26,26 @@ void RungeKutta2::do_sub_step(const grid_3D &grid, const fluid &changes, fluid &
 		if (sub_step == 0) {
 
 			// TBD by students -> do first Runge-Kutta step
+			for (int ix = 0; ix < grid.get_num_cells(0); ++ix){
+				for (int iy = 0; iy < grid.get_num_cells(1); ++iy){
+					for (int iz = 0; iz < grid.get_num_cells(2); ++iz){
+						fluid3D.fluid_data[i_field](ix, iy, iz) += delta_t * changes.fluid_data[i_field](ix, iy, iz);
+					}
+				}
+				
+			}
 
 		} else if (sub_step == 1) {
 
 			// TBD by students -> do second Runge-Kutta step
-
+			for (int ix = 0; ix < grid.get_num_cells(0); ++ix){
+				for (int iy = 0; iy < grid.get_num_cells(1); ++iy){
+					for (int iz = 0; iz < grid.get_num_cells(2); ++iz){
+						fluid3D.fluid_data[i_field](ix, iy, iz) = (fluid3D.fluid_data[i_field](ix, iy, iz) + fluid_storage.fluid_data[i_field](ix, iy, iz)) / 2. + delta_t * changes.fluid_data[i_field](ix, iy, iz) / 2.;
+					}
+				}
+				
+			}
 		} else {
 			std::cerr << " Error no such substep: " << sub_step << "\n";
 			exit(3);
