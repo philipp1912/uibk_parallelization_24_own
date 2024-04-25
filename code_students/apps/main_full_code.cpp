@@ -43,9 +43,9 @@ int main() {
 	bound_up[2] = 0.5;
 
 	std::vector<int> num_cells(3);
-	num_cells[0] = 128;
-	num_cells[1] = 128;
-	num_cells[2] = 128;
+	num_cells[0] = 64;
+	num_cells[1] = 64;
+	num_cells[2] = 64;
 
 	grid_3D my_grid(bound_low, bound_up, num_cells, 2);
 
