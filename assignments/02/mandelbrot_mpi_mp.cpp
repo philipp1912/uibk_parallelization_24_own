@@ -7,6 +7,7 @@
 #include <tuple>
 #include <vector>
 #include <mpi.h>
+#include <omp.h>
 
 // Include that allows to print result as an image
 // Also, ignore some warnings that pop up when compiling this as C++ mode
@@ -85,6 +86,7 @@ void calcMandelbrot(Image &image, int size_x, int size_y) {
 	const float left = -2.5, right = 1;
 	const float bottom = -1, top = 1;
 
+    #pragma omp parallel for
 	for (int pixel_y = start_row; pixel_y < end_row; pixel_y++) {
 		// scale y pixel into mandelbrot coordinate system
 		const float cy = (pixel_y / (float)size_y) * (top - bottom) + bottom;
@@ -125,7 +127,7 @@ void calcMandelbrot(Image &image, int size_x, int size_y) {
 
 	if (rank == 0) {
 		constexpr int stride_bytes = 0;
-		stbi_write_png("mandelbrot_mpi.png", size_x, size_y, num_channels, image.data(), stride_bytes);
+		stbi_write_png("mandelbrot_mpi_mp.png", size_x, size_y, num_channels, image.data(), stride_bytes);
 	}
 }
 
@@ -152,3 +154,5 @@ int main(int argc, char **argv) {
 
 	return EXIT_SUCCESS;
 }
+
+// enable OpenMP with the -fopenmp flag for the mpic++ compiler

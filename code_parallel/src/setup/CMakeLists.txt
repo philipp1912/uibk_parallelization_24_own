@@ -10,6 +10,7 @@ target_include_directories(sim_setup
     PUBLIC ${PROJECT_SOURCE_DIR}/include
 )
 
+
 add_library(mpi_stuff
     mpi_handler.cpp
 )
@@ -25,3 +26,4 @@ target_compile_definitions(mpi_stuff
 )
 
 target_compile_options(mpi_stuff PRIVATE ${MPI_CXX_COMPILE_FLAGS})
+

@@ -16,16 +16,22 @@ if (NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 # set standard flags
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -pedantic")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -g2")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3 -mtune=native -DNDEBUG")
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(HDF5_PREFER_PARALLEL TRUE)
 find_package(HDF5 REQUIRED)
-find_package(MPI REQUIRED)
 MESSAGE(STATUS "HDF5_INCLUDE_DIRS: ${HDF5_INCLUDE_DIR}")
+
+# Need MPI for parallel version - to be used in default setup
+MESSAGE(STATUS "Searching for MPI package")
+find_package(MPI REQUIRED)
+MESSAGE(STATUS " Found include path at ${MPI_CXX_INCLUDE_PATH}")
+
 
 # Make serial form of the library
 add_library(SerialHdf5 INTERFACE)
@@ -35,7 +41,7 @@ target_link_libraries(SerialHdf5
 
 if(${HDF5_IS_PARALLEL})
   
-  
+  find_package(MPI)
   MESSAGE(" Loaded MPI for parallel HDF5 ")
   MESSAGE(STATUS " Found include path at ${MPI_CXX_INCLUDE_PATH}")
 
@@ -58,6 +64,7 @@ set(CODE_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
 add_subdirectory(src)
 add_subdirectory(apps)
+
 
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
